@@ -5,6 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Utils.dart';
+
 
 class Choice {
   const Choice({this.title, this.icon});
@@ -43,14 +45,13 @@ class _CategoryRouteState extends State<CategoryRoute> {
   void initState() {
     super.initState();
 
-    _posts.add(new Link(99, 'titlesdfsdfsdfsdfsdfdddddddddddddddddddddfgsdfgdfgsdfgdfg plz wrap', 'site', 132, 'asb', 51231, 'pickOcto', 'https://google.com'));
+    _posts.add(new Link(99, 'titlesdfsdfsdfsdfsdfdddddddddddddddddddddfgsdfgdfgsdfgdfg plz wrap', 'site', 132, 'asb', 51231, 'pinkOcto', 'https://google.com'));
   }
 
 
 
 
   void _select(Choice choice) {
-    // Causes the app to rebuild with the new _selectedChoice.
     setState(() {
       _selectedChoice = choice;
     });
@@ -60,10 +61,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
   }
 
   void _darkTheme(BuildContext context) async {
-    // Causes the app to rebuild with the new _selectedChoice.
     // obtain shared preferences
-
-
     final prefs = await SharedPreferences.getInstance();
 
     // set new value
@@ -92,6 +90,12 @@ class _CategoryRouteState extends State<CategoryRoute> {
                   setState(() {
                     _posts = links;
                   });
+
+                },
+              ),new IconButton(
+                icon: new Icon(Icons.short_text),
+                onPressed: () async {
+                  //Utils.testFunc();
 
                 },
               ),
@@ -231,7 +235,7 @@ class EntryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(l.title + ' (' + l.domain + ')', style: new TextStyle(fontWeight: FontWeight.bold),),//Text('<title> (<site>)'),
-                    Text(l.created_utc.toString() + ' ago by ' + l.author)//Text('<hrs> ago by (<user>)')
+                    Text(Utils.getTimeSincePost(l.created_utc)+ ' ago by ' + l.author)//Text('<hrs> ago by (<user>)')
                   ]),
 
             )

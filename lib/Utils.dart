@@ -2,30 +2,52 @@ import 'dart:math';
 
 class Utils {
 
-  String getTimeSincePost(created_utc) {
+  static String getTimeSincePost(created_utc) {
+    //var created_utc = 1493216909;
+    final currentUTC = new DateTime.now().millisecondsSinceEpoch / 1000;
 
-    /*
-    final currentUTC = new DateTime.now().;
-    final hrsAgo = (currentUTC - created_utc / 60 / 60).floor();
-    if (hrsAgo >= 24 ) {
-      final daysAgo = hrsAgo / 24;
+    final secsAgo = ((currentUTC - created_utc) ).floor();
+    final minsAgo = (secsAgo / 60).floor();
 
-      if (daysAgo >= 7 ) {
-        final weeksAgo = daysAgo / 7;
+    //print('s'+secsAgo.toString());
+    //print('m'+minsAgo.toString());
 
-        if (weeksAgo >= 7 ) {
-          final monthsAgo = daysAgo / 30;
-        }
+    var result = '0 mins';
 
-        if (monthsAgo >= 12 ) {
-          final yearsAgo = daysAgo / 365;
+    if (minsAgo >= 60 ) {
+      final hrsAgo = (minsAgo / 60).floor();
 
+      if (hrsAgo >= 24) {
+        final daysAgo = (hrsAgo / 24).floor();
 
-        }
+        print(daysAgo);
+
+        if (daysAgo >= 7) {
+          final weeksAgo = (daysAgo / 7).floor();
+
+          if (weeksAgo >= 4) {
+            final monthsAgo = (daysAgo / 30).floor();
+
+            if (monthsAgo >= 12) {
+              final yearsAgo = (daysAgo / 365).floor();
+
+              result = yearsAgo.toString() + ' yrs';
+            } else
+            result = monthsAgo.toString() + ' mnths';
+          } else
+          result = weeksAgo.toString() + ' wks';
+        } else
+        result = daysAgo.toString() + ' days';
       }
-    }
-     */
-    return '5hrs';
+      else
+        result = hrsAgo.toString() + ' hrs';
+    } else
+      result = minsAgo.toString() + ' mins';
+
+    //print('res'+result);
+    //print('res'+secsAgo.toString());
+    return result;
   }
+
 
 }
