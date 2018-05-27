@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'dart:async';
 import 'dart:convert' show json, utf8;
 import 'dart:io';
@@ -8,7 +10,21 @@ enum Kind {
 }
 
 final List<String> kindPrefixes = ['t1_', 't2_', 't3_', 't4_','t5_','t6_'];
-final List<String> kindPrefixesName = ['Comment', 'Account', 'Link', 'Message','Subreddit','t6_Award'];
+final List<String> kindPrefixesName = ['Comment', 'Account', 'Link', 'Message','Subreddit','Award'];
+
+enum SubStatus {
+  blank, checked, starred
+}
+
+final List<IconData> SubStatusIcons = [Icons.check_box_outline_blank ,Icons.check_box, Icons.star];
+
+class Sub {
+  Sub(this.title, this.subStatus);
+
+  final title;
+  final subStatus;
+
+}
 
 class Link {
   Link(this.score, this.title, this.domain, this.num_comments, this.subreddit, this.created_utc, this.author, this.url);
@@ -47,6 +63,8 @@ class Comment {
 
   List <Comment> children;
 }
+
+
 
 
 class LinkAndComments {

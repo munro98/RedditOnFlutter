@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
-import 'FetchLinks.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+import 'FetchLinks.dart';
 import 'Utils.dart';
 
+
+/*
+
+TODO
+
+make interface for comments
+load comments
+load thumbnails
+
+
+manage sub reddits
+tabs for best hot new saved top controversial rising gilded comments
+
+
+
+ */
 
 class Choice {
   const Choice({this.title, this.icon});
@@ -79,6 +94,27 @@ class _CategoryRouteState extends State<CategoryRoute> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
+
+        drawer:
+
+            new Drawer(
+
+              //child: new Padding(
+              //    padding: new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    style: Theme.of(context).textTheme.display1,
+                    onChanged: (s) {
+
+                    },
+                    onSubmitted: (s) {
+
+                    },
+                  )//Text('test')
+
+              //)
+              ),
+
         appBar: new AppBar(
           title: const Text('Reddit on Flutter'),
             actions: <Widget>[
@@ -320,6 +356,7 @@ void _navigateToImage(BuildContext context) {
 }
 
 void main() {
+
   runApp(new CategoryRoute());
 }
 
