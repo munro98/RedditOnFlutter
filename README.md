@@ -1,8 +1,12 @@
-# reddit_on_flutter
+# munro98/RedditOnFlutter
 
-Reddit App build with Flutter
+Reddit App built with [Flutter](https://flutter.io/).
 
-## Getting Started
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+Work in progress
+
+Features
+ *
+ *
+ *
+ *

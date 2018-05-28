@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+import 'CommentRoute.dart';
 import 'FetchLinks.dart';
 import 'Utils.dart';
 
@@ -17,6 +18,7 @@ load thumbnails
 
 
 manage sub reddits
+listview builder for subs List
 tabs for best hot new saved top controversial rising gilded comments
 
 
@@ -53,6 +55,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
 
   final api = Api();
   var _posts = <Link>[];
+  var _subs = <String>['all', 'popular', 'AskReddit', 'worldnews'];
 
   Choice _selectedChoice = choices[0]; // The app's "state".
 
@@ -61,6 +64,8 @@ class _CategoryRouteState extends State<CategoryRoute> {
     super.initState();
 
     _posts.add(new Link(99, 'titlesdfsdfsdfsdfsdfdddddddddddddddddddddfgsdfgdfgsdfgdfg plz wrap', 'site', 132, 'asb', 51231, 'pinkOcto', 'https://google.com'));
+
+    print( " initState" + _posts.length.toString());
   }
 
 
@@ -160,36 +165,13 @@ class _CategoryRouteState extends State<CategoryRoute> {
   }
 }
 
-// One entry in the multilevel list displayed by this app.
-class Entry {
-  Entry(this.title, [this.score = 0]);
 
-  final String title;
-  final int score;
-}
 
-// The entire multilevel list displayed by this app.
-List<Entry> data = <Entry>[
-  new Entry(
-    'This is a test post',
-  ),
-  new Entry(
-    'Chapter B',
-  ),
-  new Entry(
-    'Chapter C',
-  ),
-];
 
-/*
-Icon(Icons.font_download, size: 60.0),
-Icon(Icons.http, size: 60.0),
-Icon(Icons.movie, size: 60.0),
-Image.asset()
-Image.file()
-Image.network( width, fit BoxFit.fitWidth)
-surround with aspectRatio
-* */
+
+
+
+
 
 // Displays one Entry. If the entry has children then it's displayed
 // with an ExpansionTile.
@@ -298,36 +280,10 @@ void _navigateToComments(BuildContext context) {
       .of(context)
       .push(MaterialPageRoute<Null>(
       builder: (BuildContext context) {
-        return
-          MaterialApp(
-          home : Scaffold(
-            appBar:
-            AppBar(
-                elevation: 1.0,
-                title: Text('test', style: Theme
-                    .of(context)
-                    .textTheme
-                    .display1),
-                centerTitle: true,
-                backgroundColor: Colors.green,
-                //
-            ),
-              body: Column(
-                children: <Widget>[
-                  InkWell (
-                      onTap: () {
-                        print("pressed");
-                      },
-                      child: Text('Hi')
-                  ),
-                  TextField(keyboardType: TextInputType.text,)
-                ],
-              )
+        return new CommentRouteState().build(context);
 
-          ),
-
-          );
       }
+
   ));
 }
 
@@ -358,6 +314,7 @@ void _navigateToImage(BuildContext context) {
 void main() {
 
   runApp(new CategoryRoute());
+
 }
 
 
