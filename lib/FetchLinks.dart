@@ -161,9 +161,9 @@ class Api {
     List<Comment> comments = <Comment>[];
 
     //print(jsonResponse['data']['children'][0]['data']['title']);
-    print(jsonResponse);
+    //print(jsonResponse);
 
-    for (var d in jsonResponse[0]['data']['children']) {
+    for (var d in jsonResponse[1]['data']['children']) {
       final String kind = d['kind'];
 
       if (kindPrefixes.indexOf(kind) != Kind.comment) {
@@ -173,7 +173,7 @@ class Api {
       var lData = d['data'];
       var comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited']);
       comments.add(comment);
-      print(lData['score']);
+      //print(lData['body']);
     };
 
     return comments;

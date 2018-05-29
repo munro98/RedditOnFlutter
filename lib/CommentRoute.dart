@@ -94,12 +94,12 @@ class CommentRouteState extends State<CommentRoute> {
                 onPressed: () async {
 
                   ///*
-                  //final comments = await api.fetchComments() ;
+                  final comments = await api.fetchComments() ;
 
                   setState(() {
-                    //_comments = comments;
-                    _comments = <Comment>[new Comment(65, 'ghjkghjkhgjkghjk', 0, 'pinkOcto', false),
-                    new Comment(78, 'hjkhjkhjkhjkhjk', 0, 'pinkOcto', false)];
+                    _comments = comments;
+                    //_comments = <Comment>[new Comment(65, 'ghjkghjkhgjkghjk', 0, 'pinkOcto', false),
+                    //new Comment(78, 'hjkhjkhjkhjkhjk', 0, 'pinkOcto', false)];
                   });
                   //*/
 
@@ -182,11 +182,16 @@ class CommentItem extends StatelessWidget {
                     //_navigateToComments(context);
                   },
 
-                  child: Column(
+                  child: Align(alignment: Alignment.topLeft,
+                      child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
-                        Text( (c.author + ' ' + Utils.getTimeSincePost(c.created_utc) + 'ago') ),
-                      ]),
+
+                        //child:
+                        Text( (c.author + ' ' + Utils.getTimeSincePost(c.created_utc) + 'ago') )
+                        ,
+                      ])),
 
                 )
                 ,
