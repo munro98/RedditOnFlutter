@@ -36,6 +36,7 @@ class CommentRoute extends StatefulWidget {
 class CommentRouteState extends State<CommentRoute> {
 
   final api = Api();
+  //var _comments = <Comment>[];
   var _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
   var _subs = <String>['all', 'popular', 'AskReddit', 'worldnews'];
 
@@ -45,6 +46,7 @@ class CommentRouteState extends State<CommentRoute> {
   void initState() {
     super.initState();
 
+    _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
 
     //print( " initState" + _comments.length.toString());
     //TODO fix me
@@ -91,13 +93,15 @@ class CommentRouteState extends State<CommentRoute> {
                 icon: new Icon(choices[1].icon),
                 onPressed: () async {
 
-                  /*
-                  final links = await api.fetch() ;
+                  ///*
+                  //final comments = await api.fetchComments() ;
 
                   setState(() {
-                    _posts = links;
+                    //_comments = comments;
+                    _comments = <Comment>[new Comment(65, 'ghjkghjkhgjkghjk', 0, 'pinkOcto', false),
+                    new Comment(78, 'hjkhjkhjkhjkhjk', 0, 'pinkOcto', false)];
                   });
-                  */
+                  //*/
 
                 },
               ),new IconButton(

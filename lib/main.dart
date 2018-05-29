@@ -12,15 +12,23 @@ import 'Utils.dart';
 
 TODO
 
-make interface for comments
+remove material app and scoffhold from comment route
+
+load thumbnails for links
+
 load comments
-load thumbnails
+add load more comments buttons in deeply nested comments
+
 
 
 manage sub reddits
 listview builder for subs List
 tabs for best hot new saved top controversial rising gilded comments
 
+
+stretch goals
+store data in sqlite
+shcedual chosen subreddit front pages for download
 
 
  */
@@ -271,6 +279,7 @@ class EntryItem extends StatelessWidget {
   }
 }
 
+/*
 void _navigateToComments(BuildContext context) {
   if (Navigator.of(context).canPop()) {
     Navigator.of(context).pop();
@@ -285,6 +294,13 @@ void _navigateToComments(BuildContext context) {
       }
 
   ));
+}
+*/
+void _navigateToComments(BuildContext context) {
+  Navigator.push(
+    context,
+    new MaterialPageRoute(builder: (context) => new CommentRoute()),
+  );
 }
 
 void _navigateToLink(url) async {

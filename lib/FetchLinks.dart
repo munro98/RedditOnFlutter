@@ -145,7 +145,8 @@ class Api {
     print("fetching comments");
     Client.userAgent = "testApp";
 
-    final uri = Uri.https(url, '/r/pcgaming/new.json', {'sort': 'new'}); // new hot top best rising controversial gilded
+    //'sort': 'new'
+    final uri = Uri.https(url, '/r/opengl/comments/8myqys/normals_of_a_heightmap_terrain/.json', {}); // new hot top best rising controversial gilded
 
     final httpRequest = await Client.getUrl(uri);
     final httpResponse = await httpRequest.close();
@@ -159,7 +160,7 @@ class Api {
 
     List<Comment> comments = <Comment>[];
 
-    print(jsonResponse['data']['children'][0]['data']['title']);
+    //print(jsonResponse['data']['children'][0]['data']['title']);
     print(jsonResponse);
 
     for (var d in jsonResponse[0]['data']['children']) {
@@ -172,6 +173,7 @@ class Api {
       var lData = d['data'];
       var comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited']);
       comments.add(comment);
+      print(lData['score']);
     };
 
     return comments;
