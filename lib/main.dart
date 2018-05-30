@@ -51,6 +51,8 @@ class _CategoryRouteState extends State<CategoryRoute> {
   final api = Api();
   List<Link> _posts = <Link>[];
 
+  String currentSub = 'all';
+
   Choice _selectedChoice = choices[0]; // The app's "state".
 
   @override
@@ -105,10 +107,10 @@ class _CategoryRouteState extends State<CategoryRoute> {
               new ListView.builder(
 
                 //padding: new EdgeInsets.all(8.0),
-                itemExtent: 20.0,
+                itemExtent: 40.0,
                 itemCount: Utils.subs.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new SubbRedditButton(Utils.subs[index]);
+                  return new SubbRedditButton(Utils.subs[index], this);
                 },
               )
 
@@ -328,25 +330,36 @@ void _navigateToImage(BuildContext context) {
 
 class SubbRedditButton extends StatelessWidget {
 
-  const SubbRedditButton(this.sub);
+  const SubbRedditButton(this.sub, this.crState);
 
   final String sub;
+  final _CategoryRouteState crState;
 
   @override
   Widget build(BuildContext context) {
-    return new Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-          onTap: () {print(sub);},
+    return InkWell(
+          onTap: () {
+
+
+            crState.setState(
+                    () {
+              crState.currentSub = sub;
+            }
+            );
+
+            print(crState.currentSub);
+
+          },
         child:
-      //new Flexible(
-      //child:
+      new Container(
+        //margin: EdgeInsets.,
+      child:
         Text(
             sub,
-            style: Theme.of(context).textTheme.display1
+            style: new TextStyle(fontSize: 32.0)
         )
-      //)
-      ),
+      )
+      ,
     );
   }
 }

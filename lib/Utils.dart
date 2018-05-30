@@ -4,9 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Utils {
 
-  static List<String> subs = <String>['all', 'popular', 'AskReddit', 'worldnews'];
+  //static List<String> subs = <String>['all', 'popular', 'AskReddit', 'worldnews'];
+
+  static List<String> subs = <String>['all', 'popular', 'AskReddit', 'worldnews','videos','todayilearned','pics','gaming','movies','news','gifs','mildlyinteresting','aww','Showerthoughts','television','Jokes','Jokes','science','sports','explainlikeimfive'];
 
   static List<String> cat = <String>['best', 'hot', 'new', 'top','controversial']; // best hot new saved top controversial rising gilded
+
+
 
   static String getTimeSincePost(created_utc) {
     //var created_utc = 1493216909;

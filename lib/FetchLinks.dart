@@ -171,7 +171,7 @@ class Api {
 
 
       var lData = d['data'];
-      var comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited']);
+      Comment comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited']);
       comments.add(comment);
       //print(lData['body']);
     };

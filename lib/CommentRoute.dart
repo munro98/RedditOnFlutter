@@ -37,7 +37,7 @@ class CommentRouteState extends State<CommentRoute> {
 
   final api = Api();
   //var _comments = <Comment>[];
-  var _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
+  List<Comment> _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
 
 
   Choice _selectedChoice = choices[0]; // The app's "state".
