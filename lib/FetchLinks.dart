@@ -27,7 +27,7 @@ class Sub {
 }
 
 class Link {
-  Link(this.score, this.title, this.domain, this.num_comments, this.subreddit, this.created_utc, this.author, this.url);
+  Link(this.score, this.title, this.domain, this.num_comments, this.subreddit, this.created_utc, this.author, this.url, this.permalink);
 
   final score;
   final title;
@@ -37,7 +37,10 @@ class Link {
   final created_utc; // e.g 1527263886
   final author; // e.g pinkOcto
 
+
   final url;
+
+  final permalink; // e.g /r/pcgaming/comments/8n4kiq/upset_with_launch_issues_bless_online_players/
 
   //final gold; //gilded
 
@@ -48,9 +51,6 @@ class Link {
   //over_18
 
 }
-
-
-
 
 class Comment {
   Comment(this.score, this.body, this.created_utc, this.author, this.edited);
@@ -64,21 +64,17 @@ class Comment {
   List <Comment> children;
 }
 
-
-
-
 class LinkAndComments {
   Link link;
   Comment comment;
 }
 
-
 class Api {
-  final Client = HttpClient();
+  static final Client = HttpClient();
 
-  final url = 'www.reddit.com';
+  static final String url = 'www.reddit.com';
 
-  Future<List<Link>> fetch () async {
+  static Future<List<Link>> fetch (String sub) async {
 
     print("fetching");
 
@@ -86,7 +82,7 @@ class Api {
     //final uri = Uri.https(url, '/$category/convert', {'amount': amount, 'from' : fromUnit, 'to': toUnit});
     Client.userAgent = "testApp";
 
-    final uri = Uri.https(url, '/r/pcgaming/new.json', {'sort': 'new'}); // new hot top best rising controversial gilded
+    final uri = Uri.https(url, '/r/$sub/.json', {'sort': 'new'}); // new hot top best rising controversial gilded
 
     ///*
     final httpRequest = await Client.getUrl(uri);
@@ -110,35 +106,20 @@ class Api {
       var lData = d['data'];
       var link = new Link(lData['score'], lData['title'], lData['domain'],
           lData['num_comments'], lData['subreddit'],
-          lData['created_utc'], lData['author'], lData['url']);
+          lData['created_utc'], lData['author']
+          , lData['url'], lData['permalink']);
       links.add(link);
     };
-    //}
-    //json.
 
-    /*
-    var lData = jsonResponse['data']['children'][0]['data'];
-    var link = new Link(lData['title'], lData['domain'],
-        lData['num_comments'], lData['subreddit'],
-        lData['created_utc'], lData['author']);
-    links.add(link);
-    */
-
-    //}
     //print(data['data']['children'][i]['data']['title']  + ' (' + data['data']['children'][i]['data']['domain'] +')')
-    //print();
 
-    //return jsonResponse['conversion'].toDouble();
-    //return jsonResponse['conversion'].toDouble();
-    //*/
     return links;
-
   }
 
 
-
-
-  Future<List<Comment>> fetchComments () async {
+  static Future<List<Comment>> fetchComments (String permalink) async {
+    //String permalink
+    //String sort
 
     // best top new controversial old q&a
 
@@ -146,7 +127,9 @@ class Api {
     Client.userAgent = "testApp";
 
     //'sort': 'new'
-    final uri = Uri.https(url, '/r/opengl/comments/8myqys/normals_of_a_heightmap_terrain/.json', {}); // new hot top best rising controversial gilded
+    //final uri = Uri.https(url, '/r/opengl/comments.json', {}); // new hot top best rising controversial gilded
+
+    final uri = Uri.https(url, '$permalink/.json', {'sort': 'best'});
 
     final httpRequest = await Client.getUrl(uri);
     final httpResponse = await httpRequest.close();

@@ -48,7 +48,6 @@ class CategoryRoute extends StatefulWidget {
 }
 
 class _CategoryRouteState extends State<CategoryRoute> {
-  final api = Api();
   List<Link> _posts = <Link>[];
 
   String currentSub = 'all';
@@ -60,7 +59,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
     super.initState();
 
     _posts.add(new Link(99, 'This is a test post', 'google.com', 1337, 'asb', 0,
-        'The developer', 'https://google.com'));
+        'The developer', 'https://google.com', ''));
 
     print(" initState" + _posts.length.toString());
   }
@@ -72,6 +71,17 @@ class _CategoryRouteState extends State<CategoryRoute> {
   }
 
   void _openLink() {}
+
+
+  void refresh() async {
+
+    final links = await Api.fetch(currentSub);
+
+    setState(() {
+      _posts = links;
+    });
+
+  }
 
   void _darkTheme(BuildContext context) async {
     // obtain shared preferences
@@ -150,11 +160,9 @@ class _CategoryRouteState extends State<CategoryRoute> {
         new IconButton(
           icon: new Icon(choices[1].icon),
           onPressed: () async {
-            final links = await api.fetch();
 
-            setState(() {
-              _posts = links;
-            });
+            refresh();
+
           },
         ),
         new IconButton(
@@ -252,7 +260,7 @@ class EntryItem extends StatelessWidget {
                   highlightColor: Colors.deepPurple,
                   onTap: () {
                     print('tap2!');
-                    _navigateToComments(context);
+                    _navigateToComments(context, l.permalink);
                   },
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,10 +307,10 @@ void _navigateToComments(BuildContext context) {
   ));
 }
 */
-void _navigateToComments(BuildContext context) {
+void _navigateToComments(BuildContext context, String permalink) {
   Navigator.push(
     context,
-    new MaterialPageRoute(builder: (context) => new CommentRoute()),
+    new MaterialPageRoute(builder: (context) => new CommentRoute(permalink : permalink)),
   );
 }
 
@@ -338,15 +346,14 @@ class SubbRedditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-          onTap: () {
-
+          onTap: () async {
 
             crState.setState(
                     () {
               crState.currentSub = sub;
             }
             );
-
+            crState.refresh();
             print(crState.currentSub);
 
           },

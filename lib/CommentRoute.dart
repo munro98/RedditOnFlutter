@@ -13,7 +13,6 @@ class Choice {
   final IconData icon;
 }
 
-
 const List<Choice> choices = const <Choice>[
   const Choice(title: 'Car', icon: Icons.directions_car),
   const Choice(title: 'Refresh', icon: Icons.refresh),
@@ -26,7 +25,11 @@ const List<Choice> choices = const <Choice>[
 
 class CommentRoute extends StatefulWidget {
 
-  const CommentRoute();
+  final String permalink;
+
+  const CommentRoute({
+    @required this.permalink,
+  }) : assert(permalink != null);
 
   @override
   CommentRouteState createState() => CommentRouteState();
@@ -35,21 +38,23 @@ class CommentRoute extends StatefulWidget {
 
 class CommentRouteState extends State<CommentRoute> {
 
-  final api = Api();
-  //var _comments = <Comment>[];
-  List<Comment> _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
-
-
-  Choice _selectedChoice = choices[0]; // The app's "state".
+  List<Comment> _comments;
+  Choice _selectedChoice = choices[0];
+  String permalink;
 
   @override
   void initState() {
     super.initState();
 
-    _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
+    _comments = <Comment>[new Comment(1, 'Looks like the comments did not load.', 0, 'TheDeveloper', false)];
 
-    //print( " initState" + _comments.length.toString());
-    //TODO fix me
+    Api.fetchComments(widget.permalink).then((result)
+    {
+      setState(() {
+        _comments = result;
+      });
+    }
+    );
   }
 
   void _select(Choice choice) {
@@ -73,7 +78,7 @@ class CommentRouteState extends State<CommentRoute> {
                 onPressed: () async {
 
                   ///*
-                  final comments = await api.fetchComments() ;
+                  final comments = await Api.fetchComments(widget.permalink);
 
                   setState(() {
                     _comments = comments;
@@ -174,7 +179,7 @@ class CommentItem extends StatelessWidget {
                       children: [
 
                         //child:
-                        Text( (c.author + ' ' + Utils.getTimeSincePost(c.created_utc) + 'ago') )
+                        Text( (c.author + ' ' + Utils.getTimeSincePost(c.created_utc) + ' ago') )
                         ,
                       ])),
 
