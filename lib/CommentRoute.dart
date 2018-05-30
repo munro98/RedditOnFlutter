@@ -38,7 +38,7 @@ class CommentRouteState extends State<CommentRoute> {
   final api = Api();
   //var _comments = <Comment>[];
   var _comments = <Comment>[new Comment(65, 'This is a test comments', 0, 'pinkOcto', false), new Comment(78, 'This is anorher test comment', 0, 'pinkOcto', false)];
-  var _subs = <String>['all', 'popular', 'AskReddit', 'worldnews'];
+
 
   Choice _selectedChoice = choices[0]; // The app's "state".
 
@@ -63,29 +63,8 @@ class CommentRouteState extends State<CommentRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-
-        drawer:
-
-        new Drawer(
-
-          //child: new Padding(
-          //    padding: new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: TextField(
-              keyboardType: TextInputType.text,
-              style: Theme.of(context).textTheme.display1,
-              onChanged: (s) {
-
-              },
-              onSubmitted: (s) {
-
-              },
-            )//Text('test')
-
-          //)
-        ),
-
+    return
+      new Scaffold(
         appBar: new AppBar(
             title: const Text('Reddit on Flutter'),
             actions: <Widget>[
@@ -107,7 +86,6 @@ class CommentRouteState extends State<CommentRoute> {
               ),new IconButton(
                 icon: new Icon(Icons.short_text),
                 onPressed: () async {
-                  //Utils.testFunc();
 
                 },
               ),
@@ -138,8 +116,8 @@ class CommentRouteState extends State<CommentRoute> {
         )
 
         ,
-      ),
-    );
+      )
+    ;
   }
 }
 
@@ -163,12 +141,19 @@ class CommentItem extends StatelessWidget {
         },
 
         child :
+
         Row(children: [
-          Column(children: [
+
+            Align(alignment: Alignment.topLeft,
+            child:
+            Column(children: [
             Icon(Icons.arrow_upward),
             Text(c.score.toString()),
             Icon(Icons.arrow_downward)
-          ]),
+          ]
+            )
+
+          ),
 
           new Flexible( child:
           Column(

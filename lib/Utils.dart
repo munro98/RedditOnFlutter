@@ -1,6 +1,12 @@
 import 'dart:math';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Utils {
+
+  static List<String> subs = <String>['all', 'popular', 'AskReddit', 'worldnews'];
+
+  static List<String> cat = <String>['best', 'hot', 'new', 'top','controversial']; // best hot new saved top controversial rising gilded
 
   static String getTimeSincePost(created_utc) {
     //var created_utc = 1493216909;
@@ -47,6 +53,25 @@ class Utils {
     //print('res'+result);
     //print('res'+secsAgo.toString());
     return result;
+  }
+
+
+  static void addSubReddits(String sub) async {
+    subs.add(sub);
+  }
+
+  static void removeSubReddits(String sub) async {
+    subs.removeAt(subs.indexOf(sub));
+  }
+
+  static void saveSubReddits() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('sub_reddits', subs);
+  }
+
+  static void loadSubReddits() async {
+    final prefs = await SharedPreferences.getInstance();
+    subs = prefs.getStringList('sub_reddits');
   }
 
 
