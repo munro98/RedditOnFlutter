@@ -10,7 +10,6 @@ import 'Utils.dart';
 
 TODO
 
-use just on material app and scoffhold for all routes comment route
 load thumbnails for links
 load nested comments
 save subreddits in prefs
@@ -50,7 +49,7 @@ class CategoryRoute extends StatefulWidget {
 
 class _CategoryRouteState extends State<CategoryRoute> {
   final api = Api();
-  var _posts = <Link>[];
+  List<Link> _posts = <Link>[];
 
   Choice _selectedChoice = choices[0]; // The app's "state".
 
@@ -92,7 +91,6 @@ class _CategoryRouteState extends State<CategoryRoute> {
   @override
   Widget build(BuildContext context) {
     return new DefaultTabController(
-
         length: 3,
         child: new Scaffold(
       drawer: new Drawer(
@@ -124,13 +122,27 @@ class _CategoryRouteState extends State<CategoryRoute> {
       appBar:
           new AppBar(
               title: const Text('Reddit on Flutter'),
-              bottom: new TabBar(
+              bottom: new PreferredSize(
+                preferredSize: const Size.fromHeight(48.0),
+                child: new Theme(
+                  data: Theme.of(context).copyWith(accentColor: Colors.white),
+                  child: new Container(
+                    height: 48.0,
+                    alignment: Alignment.center,
+                    child:
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Expanded( child: InkWell ( child: Center(child: Text('Hot'),))),
+                        new Expanded( child: InkWell ( child: Center(child: Text('New'),))),
+                        new Expanded( child: InkWell ( child: Center(child: Text('Top'),))),
 
-                tabs: [
-                  new Tab(text: 'hot',),
-                  new Tab(text: 'new'),
-                  new Tab(text: 'top'),
-                ],
+                      ],
+                    )
+
+                    ,
+                  ),
+                ),
               ),
               actions: <Widget>[
         new IconButton(
