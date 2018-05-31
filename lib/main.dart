@@ -383,17 +383,6 @@ class App extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    return Container(
-      child: Text('sgsag'),
-    );
-  }
-}
-
 void main() {
   //runApp(new CategoryRoute());
   runApp(new App());

@@ -46,8 +46,11 @@ class CommentRouteState extends State<CommentRoute> {
   void initState() {
     super.initState();
 
-    _comments = <Comment>[new Comment(1, 'Looks like the comments did not load.', 0, 'TheDeveloper', false)];
+    _comments = <Comment>[new Comment(1, 'Looks like the comments did not load.', 0, 'TheDeveloper', false, new List<Comment>())];
+    _comments[0].children.add(new Comment(1, 'Child comment', 0, 'TheDeveloper', false, new List<Comment>()));
 
+
+    /*
     Api.fetchComments(widget.permalink).then((result)
     {
       setState(() {
@@ -55,6 +58,9 @@ class CommentRouteState extends State<CommentRoute> {
       });
     }
     );
+    */
+
+
   }
 
   void _select(Choice choice) {

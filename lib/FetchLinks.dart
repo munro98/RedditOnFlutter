@@ -53,7 +53,7 @@ class Link {
 }
 
 class Comment {
-  Comment(this.score, this.body, this.created_utc, this.author, this.edited);
+  Comment(this.score, this.body, this.created_utc, this.author, this.edited, this.children);
 
   final score;
   final body;
@@ -154,8 +154,14 @@ class Api {
 
 
       var lData = d['data'];
-      Comment comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited']);
+      Comment comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited'], new List<Comment>());
       comments.add(comment);
+
+
+      //var replies = lData['replies']
+
+
+
       //print(lData['body']);
     };
 
