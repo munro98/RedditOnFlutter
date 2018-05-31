@@ -74,7 +74,7 @@ class Api {
 
   static final String url = 'www.reddit.com';
 
-  static Future<List<Link>> fetch (String sub) async {
+  static Future<List<Link>> fetch (String sub, String sortOrder) async {
 
     print("fetching");
 
@@ -82,7 +82,7 @@ class Api {
     //final uri = Uri.https(url, '/$category/convert', {'amount': amount, 'from' : fromUnit, 'to': toUnit});
     Client.userAgent = "testApp";
 
-    final uri = Uri.https(url, '/r/$sub/.json', {'sort': 'new'}); // new hot top best rising controversial gilded
+    final uri = Uri.https(url, '/r/$sub/.json', {'sort': sortOrder}); // new hot top best rising controversial gilded
 
     ///*
     final httpRequest = await Client.getUrl(uri);
@@ -97,8 +97,8 @@ class Api {
 
     List<Link> links = <Link>[];
 
-    print(jsonResponse['data']['children'][0]['data']['title']);
-    print(jsonResponse);
+    //print(jsonResponse['data']['children'][0]['data']['title']);
+    //print(jsonResponse);
 
     //for (int i = 0; i < jsonResponse['data']['children'].length(); i++) {
     for (var d in jsonResponse['data']['children']) {
@@ -117,7 +117,27 @@ class Api {
   }
 
 
-  static Future<List<Comment>> fetchComments (String permalink) async {
+  static iterChildren(Comment parentComment, root, int depth) {
+    //print(root.runtimeType);
+    for (var child in root['data']['children']) {
+
+      if (child['kind'] != 't1'){
+        break;
+      }
+
+      var lData = child['data'];
+
+      Comment comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited'], new List<Comment>());
+      parentComment.children.add(comment);
+
+      if (lData['replies'] != null && lData['replies'] != '') {
+        iterChildren(comment, lData['replies'],depth+1);
+      }
+
+    }
+  }
+
+  static Future<List<Comment>> fetchComments (String permalink, String sortOrder) async {
     //String permalink
     //String sort
 
@@ -129,7 +149,7 @@ class Api {
     //'sort': 'new'
     //final uri = Uri.https(url, '/r/opengl/comments.json', {}); // new hot top best rising controversial gilded
 
-    final uri = Uri.https(url, '$permalink/.json', {'sort': 'best'});
+    final uri = Uri.https(url, '$permalink/.json', {'sort': sortOrder, 'raw_json' : '1' }); // 'best'
 
     final httpRequest = await Client.getUrl(uri);
     final httpResponse = await httpRequest.close();
@@ -143,13 +163,15 @@ class Api {
 
     List<Comment> comments = <Comment>[];
 
-    //print(jsonResponse['data']['children'][0]['data']['title']);
-    //print(jsonResponse);
 
     for (var d in jsonResponse[1]['data']['children']) {
       final String kind = d['kind'];
 
-      if (kindPrefixes.indexOf(kind) != Kind.comment) {
+      //if (kindPrefixes.indexOf(kind) != Kind.comment) {
+      //}
+
+      if(kind != 't1') {
+        break;
       }
 
 
@@ -157,12 +179,12 @@ class Api {
       Comment comment = new Comment(lData['score'], lData['body'], lData['created_utc'], lData['author'], lData['edited'], new List<Comment>());
       comments.add(comment);
 
+      //print("LEN" + lData['replies'].length());
 
-      //var replies = lData['replies']
+      if (lData['replies'] != null && lData['replies'] != '')
+        iterChildren(comment, lData['replies'], 1);
 
 
-
-      //print(lData['body']);
     };
 
     return comments;

@@ -30,8 +30,6 @@ class Utils {
       if (hrsAgo >= 24) {
         final daysAgo = (hrsAgo / 24).floor();
 
-        print(daysAgo);
-
         if (daysAgo >= 7) {
           final weeksAgo = (daysAgo / 7).floor();
 

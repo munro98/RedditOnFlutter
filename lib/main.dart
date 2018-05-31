@@ -32,12 +32,9 @@ class Choice {
 }
 
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: Icons.directions_car),
-  const Choice(title: 'Refresh', icon: Icons.refresh),
-  const Choice(title: 'Boat', icon: Icons.directions_boat),
-  const Choice(title: 'Bus', icon: Icons.directions_bus),
-  const Choice(title: 'Train', icon: Icons.directions_railway),
-  const Choice(title: 'Walk', icon: Icons.directions_walk),
+  const Choice(title: 'Button1', icon: Icons.directions_car),
+  const Choice(title: 'Button2', icon: Icons.directions_boat),
+  const Choice(title: 'Button3', icon: Icons.directions_bus),
 ];
 
 class CategoryRoute extends StatefulWidget {
@@ -48,18 +45,18 @@ class CategoryRoute extends StatefulWidget {
 }
 
 class _CategoryRouteState extends State<CategoryRoute> {
+
   List<Link> _posts = <Link>[];
-
   String currentSub = 'all';
-
   Choice _selectedChoice = choices[0]; // The app's "state".
+  String sortOrder = 'best';
 
   @override
   void initState() {
     super.initState();
 
     _posts.add(new Link(99, 'This is a test post', 'google.com', 1337, 'asb', 0,
-        'The developer', 'https://google.com', ''));
+        'The developer', 'https://google.com', null));
 
     print(" initState" + _posts.length.toString());
   }
@@ -75,7 +72,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
 
   void refresh() async {
 
-    final links = await Api.fetch(currentSub);
+    final links = await Api.fetch(currentSub, sortOrder);
 
     setState(() {
       _posts = links;
@@ -145,9 +142,10 @@ class _CategoryRouteState extends State<CategoryRoute> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        new Expanded( child: InkWell ( child: Center(child: Text('Hot'),))),
-                        new Expanded( child: InkWell ( child: Center(child: Text('New'),))),
-                        new Expanded( child: InkWell ( child: Center(child: Text('Top'),))),
+                        new Expanded( child: InkWell ( child: Center(child: Text('Best'),), onTap:() {sortOrder = 'best'; refresh(); } ,)),
+                        new Expanded( child: InkWell ( child: Center(child: Text('Hot'),), onTap: () {sortOrder = 'hot'; refresh();   } ,)),
+                        new Expanded( child: InkWell ( child: Center(child: Text('New'),), onTap: () {sortOrder = 'new'; refresh();   })),
+                        new Expanded( child: InkWell ( child: Center(child: Text('Top'),), onTap: () {sortOrder = 'top'; refresh();   })),
 
                       ],
                     )
@@ -158,23 +156,17 @@ class _CategoryRouteState extends State<CategoryRoute> {
               ),
               actions: <Widget>[
         new IconButton(
-          icon: new Icon(choices[1].icon),
+          icon: new Icon(Icons.refresh),
           onPressed: () async {
 
             refresh();
 
           },
         ),
-        new IconButton(
-          icon: new Icon(Icons.short_text),
-          onPressed: () async {
-            //Utils.testFunc();
-          },
-        ),
         new PopupMenuButton<Choice>(
           onSelected: _select,
           itemBuilder: (BuildContext context) {
-            return choices.skip(2).map((Choice choice) {
+            return choices.map((Choice choice) {
               return new PopupMenuItem<Choice>(
                 value: choice,
                 child: new Text(choice.title),
@@ -308,10 +300,16 @@ void _navigateToComments(BuildContext context) {
 }
 */
 void _navigateToComments(BuildContext context, String permalink) {
-  Navigator.push(
-    context,
-    new MaterialPageRoute(builder: (context) => new CommentRoute(permalink : permalink)),
-  );
+
+  if (permalink != null) {
+
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new CommentRoute(permalink : permalink)),
+    );
+
+  }
+
 }
 
 void _navigateToLink(url) async {
