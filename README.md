@@ -8,7 +8,7 @@ Reddit App built with [Flutter](https://flutter.io/).
 Features
  * Browse popular subreddits using the app drawer
  * Open links in the browser
- * Brose links by Hot New and Top
+ * Browse links by Hot New and Top
  * Displays thumbnails on posts
  * Read comments
  
