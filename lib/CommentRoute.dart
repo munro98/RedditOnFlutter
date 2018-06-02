@@ -48,9 +48,9 @@ class CommentRouteState extends State<CommentRoute> {
     super.initState();
 
     _comments = <Comment>[new Comment(1, 'Looks like the comments did not load.', 0, 'TheDeveloper', false, new List<Comment>())];
-    _comments[0].children.add(new Comment(1, 'Child comment', 0, 'TheDeveloper', false, new List<Comment>()));
+    //_comments[0].children.add(new Comment(1, 'Child comment', 0, 'TheDeveloper', false, new List<Comment>()));
 
-    _comments[0].children.add(new Comment(1, 'Child comment', 0, 'TheDeveloper', false, new List<Comment>()));
+    //_comments[0].children.add(new Comment(1, 'Child comment', 0, 'TheDeveloper', false, new List<Comment>()));
 
 
     if (widget.permalink != null) {

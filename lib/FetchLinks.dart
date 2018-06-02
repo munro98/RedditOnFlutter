@@ -27,7 +27,7 @@ class Sub {
 }
 
 class Link {
-  Link(this.score, this.title, this.domain, this.num_comments, this.subreddit, this.created_utc, this.author, this.url, this.permalink);
+  Link(this.score, this.title, this.domain, this.num_comments, this.subreddit, this.created_utc, this.author, this.url, this.permalink, this.thumbnail);
 
   final score;
   final title;
@@ -41,6 +41,8 @@ class Link {
   final url;
 
   final permalink; // e.g /r/pcgaming/comments/8n4kiq/upset_with_launch_issues_bless_online_players/
+
+  final thumbnail;
 
   //final gold; //gilded
 
@@ -62,6 +64,7 @@ class Comment {
   final edited;
 
   List <Comment> children;
+
 }
 
 class LinkAndComments {
@@ -107,7 +110,7 @@ class Api {
       var link = new Link(lData['score'], lData['title'], lData['domain'],
           lData['num_comments'], lData['subreddit'],
           lData['created_utc'], lData['author']
-          , lData['url'], lData['permalink']);
+          , lData['url'], lData['permalink'], lData['thumbnail']);
       links.add(link);
     };
 

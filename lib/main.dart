@@ -10,18 +10,14 @@ import 'Utils.dart';
 
 TODO
 
-load thumbnails for links
-load nested comments
-save subreddits in prefs
-manage subreddits
+ * Load additional posts beyond the first page
+ * Logging into reddit account
+ * Be able to vote on posts and comments
+ * Load deeply nested comments
+ * Add button to load deeply nested comments
+ * Be able to customize subreddits to broswe and save them
 
-tabs for best hot new saved top controversial rising gilded comments
 
-listview builder for subs List
-stretch goals
-add load more buttons for nested comments
-store data in sqlite
-shcedual chosen subreddit front pages for download
  */
 
 class Choice {
@@ -56,7 +52,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
     super.initState();
 
     _posts.add(new Link(99, 'This is a test post', 'google.com', 1337, 'asb', 0,
-        'The developer', 'https://google.com', null));
+        'The developer', 'https://google.com', null, null));
 
     print(" initState" + _posts.length.toString());
   }
@@ -202,37 +198,16 @@ class EntryItem extends StatelessWidget {
         onHorizontalDragEnd: (DragEndDetails d) async {
           print("dragEnd");
 
-          /*
-        final api = crt.api;
-        final links = await api.fetch() ;
-
-        crt.setState(() {
-          crt._posts = links;
-        });
-
-
-        crt.setState( () {
-          var newPosts = crt._posts;
-          newPosts.add(new Entry('This is a new entry'));
-          crt._posts = crt._posts;
-        }
-        );
-
-
-        crt.setState( () {
-          var newPosts = crt._posts;
-          newPosts.add(new Link('titlesdfsdfsdfsdfsdfdddddddddddddddddddddfgsdfgdfgsdfgdfg plz wrap', 'site', 132, 'pickOcto', 51231, 'asb'));
-          crt._posts = crt._posts;
-        }
-        );
-        */
         },
         child: Row(children: [
-          Column(children: [
-            Icon(Icons.arrow_upward),
-            Text(l.score.toString()), //l.score.toString()
-            Icon(Icons.arrow_downward)
-          ]),
+          new Align(
+            alignment: Alignment.topLeft,
+            child: Column(children: [
+              Icon(Icons.arrow_upward),
+              Text(l.score.toString()), //l.score.toString()
+              Icon(Icons.arrow_downward)
+            ]),
+          ),
           InkWell(
             splashColor: Colors.deepOrange,
             highlightColor: Colors.deepPurple,
@@ -240,8 +215,15 @@ class EntryItem extends StatelessWidget {
               print('openLink');
               _navigateToLink(l.url);
             },
-            child: Icon(Icons.message,
-                size: 60.0), // Icons.font_download Icons.link
+            child:
+            new Align(
+              alignment: Alignment.topLeft,
+            child:
+            l.thumbnail != null && l.thumbnail != '' ?
+            new Image.network(l.thumbnail, fit: BoxFit.fitWidth, width: 60.0,) :
+            Icon(Icons.message, size: 60.0) , // Icons.font_download Icons.link
+            )
+
           ),
           new Flexible(
               child: Column(
