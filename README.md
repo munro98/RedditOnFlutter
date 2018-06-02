@@ -3,6 +3,7 @@
 Reddit App built with [Flutter](https://flutter.io/).
 
 
+![alt text](https://raw.githubusercontent.com/munro98/RedditOnFlutter/master/redditAppScreenshot.png)
 
 
 Features

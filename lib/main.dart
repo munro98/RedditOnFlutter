@@ -118,10 +118,6 @@ class _CategoryRouteState extends State<CategoryRoute> {
               )
 
 
-
-
-
-
           )
       ),
       appBar:
